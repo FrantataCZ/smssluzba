@@ -13,5 +13,6 @@
             "email": "info@frantata.cz"
         }
     ],
+    "minimum-stability": "dev",
     "require": {}
 }
