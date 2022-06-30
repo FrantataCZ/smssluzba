@@ -4,7 +4,7 @@ namespace FrantataCZ;
 
 use FrantataCZ\Exception;
 
-class smssluzba
+class Sms
 {
     private string $login;
     private string $password;
@@ -27,7 +27,7 @@ class smssluzba
         return md5(md5($this->password).$this->login.'send'.substr($this->message,0,31));
     }
 
-    public function newSms()
+    public function new()
     {
         $this->message = null;
         $this->recipient = null;
@@ -79,7 +79,7 @@ class smssluzba
                 'header'  => "Content-Type: application/x-www-form-urlencoded; charset=utf-8",
                 'method'  => 'POST',
                 'content' => http_build_query($data, '', "&")
-                ]
+            ]
         ];
         $context  = stream_context_create($options);
 

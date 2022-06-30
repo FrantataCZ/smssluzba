@@ -4,7 +4,7 @@
     "type": "library",
     "autoload":  {
         "files": [
-            "src/FrantataCZ/smssluzba.php",
+            "src/FrantataCZ/Sms.php",
             "src/FrantataCZ/Exception.php",
             "src/FrantataCZ/Template.php"
         ]
