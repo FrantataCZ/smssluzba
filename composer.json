@@ -12,7 +12,6 @@
             "email": "info@frantata.cz"
         }
     ],
-    "minimum-stability": "dev",
     "license": "MIT",
     "require": {
         "php": ">=7.4"
