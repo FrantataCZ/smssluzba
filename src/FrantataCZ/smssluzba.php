@@ -17,7 +17,6 @@ class smssluzba
 
     public function __construct(string $login, string $password)
     {
-        require_once "Exception.php";
         $this->password = $password;
         $this->login = $login;
     }
