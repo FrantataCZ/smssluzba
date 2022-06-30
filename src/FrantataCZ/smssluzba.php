@@ -1,6 +1,6 @@
 <?php
 
-namespace FrantataCZ\Smssluzba;
+namespace FrantataCZ;
 
 use FrantataCZ\Exception;
 

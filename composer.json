@@ -2,7 +2,9 @@
     "name": "frantatacz/smssluzba",
     "description": "This PHP library is created for sms-sluzba.cz. It will allow you to send SMS safely and easily.",
     "type": "library",
-    "files": ["src/FrantataCZ/Exception.php", "src/FrantataCZ/smssluzba.php"],
+    "files":  {
+        "classmap": ["src", "FrantataCZ", "frantatacz", "smssluzba"]
+    },
 
     "authors": [
         {
