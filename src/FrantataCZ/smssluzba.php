@@ -14,6 +14,7 @@ class smssluzba
 
     const ACTION = "send";
     const URL = "https://smsgateapi.sms-sluzba.cz/apipost30/sms";
+    const MAX_SMS_LEN = 459; // = 3x normal SMS
 
     public function __construct(string $login, string $password)
     {
@@ -32,16 +33,32 @@ class smssluzba
         $this->recipient = null;
     }
 
+    /**
+     * @throws \FrantataCZ\Exception
+     */
     public function setRecipient(string $number): void
     {
-        // TODO: validation
+        // Regex from: https://uibakery.io/regex-library/phone-number-php
+        $regex = "/^\\+?[1-9][0-9]{7,14}$/";
+
+        if(!preg_match($regex, $number))
+        {
+            throw new Exception("Phone number isn't valid.", 400);
+        }
         $this->recipient = $number;
     }
 
+    /**
+     * @throws \FrantataCZ\Exception
+     */
     public function setMessage(string $message): void
     {
-        // TODO: validation
         $this->message = $this->fixMessage($message);
+
+        if(strlen($this->message) > self::MAX_SMS_LEN)
+        {
+            throw new \FrantataCZ\Exception("Text message isn't valid.",400);
+        }
     }
 
     /**
