@@ -2,6 +2,8 @@
 
 namespace FrantataCZ\Smssluzba;
 
+use FrantataCZ\Exception;
+
 class smssluzba
 {
     private string $login;
