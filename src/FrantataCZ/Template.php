@@ -4,21 +4,28 @@ namespace FrantataCZ;
 
 class Template
 {
-    private string $template;
+    private array $template;
 
-    public function __construct(string $template)
+    public function setTemplate(string $templateName, string $content)
     {
-        $this->template = $template;
+        $this->template[$templateName] = $content;
     }
 
-    public function getTemplate(?array $args = null): string
+    public function getTemplate(string $templateName, ?array $args = null): ?string
     {
-        $returnString = $this->template;
-        foreach (explode("{", $this->template) as $var) {
-            if (strpos($var, "}") !== false)
-            {
+        if(!array_key_exists($templateName, $this->template))
+        {
+            return null;
+        }
+        $returnString = $this->template[$templateName];
+        if($args === null)
+        {
+            return $returnString;
+        }
+        foreach (explode("{", $this->template[$templateName]) as $var) {
+            if (strpos($var, "}") !== false) {
                 $var = explode("}", $var)[0];
-                if(array_key_exists($var, $args)) {
+                if (array_key_exists($var, $args)) {
                     $returnString = str_replace("{" . $var . "}", $args[$var], $returnString);
                 }
             }
