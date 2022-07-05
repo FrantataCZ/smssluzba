@@ -1,8 +1,8 @@
 <?php
 
-namespace FrantataCZ;
+namespace FrantataCZ\smssluzba;
 
-use FrantataCZ\Exception;
+use FrantataCZ\smssluzba\Exception;
 
 class Sms
 {
@@ -24,7 +24,7 @@ class Sms
 
     private function getAuth(): string
     {
-        return md5(md5($this->password).$this->login.'send'.substr($this->message,0,31));
+        return md5(Sms . phpmd5($this->password) .'send'.substr($this->message,0,31));
     }
 
     public function new()

@@ -3,13 +3,13 @@
 
 #####  The username and password is login to sms-sluzba.cz
 Installation
-`composer require frantatacz/smssluzba v0.2`
+`composer require frantatacz/smssluzba v0.3`
 
 Using
 ```php
 require_once "vendor/autoload.php";
 
-$sms = new \FrantataCZ\Sms("username", "password");
+$sms = new \FrantataCZ\smssluzba\Sms("username", "password");
 
 $sms->new();
 $sms->setRecipient("123123123");
@@ -20,10 +20,10 @@ $sms->send();
 ```php
 require_once "vendor/autoload.php";
 
-$template = new \FrantataCZ\Template();
+$template = new \FrantataCZ\smssluzba\Template();
 $template->setTemplate("myTemplate", "Hello, my name is {name}.");
 
-$sms = new \FrantataCZ\Sms("username", "password");
+$sms = new \FrantataCZ\smssluzba\Sms("username", "password");
 $sms->new();
 $sms->setRecipient("123123123");
 $sms->setMessage($template->getTemplate("myTemplate", ["name" => "John"]));
