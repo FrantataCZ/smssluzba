@@ -1,6 +1,6 @@
 <?php
 
-namespace FrantataCZ;
+namespace FrantataCZ\smssluzba;
 
 class Exception extends \Exception
 {
