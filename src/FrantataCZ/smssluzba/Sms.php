@@ -11,6 +11,7 @@ class Sms
 
     private ?string $recipient = null;
     private ?string $message = null;
+    private ?array $recipients = null;
 
     const ACTION = "send";
     const URL = "https://smsgateapi.sms-sluzba.cz/apipost30/sms";
@@ -31,6 +32,7 @@ class Sms
     {
         $this->message = null;
         $this->recipient = null;
+        $this->recipients = null;
     }
 
     /**
@@ -43,9 +45,35 @@ class Sms
 
         if(!preg_match($regex, $number))
         {
-            throw new Exception("Phone number isn't valid.", 400);
+            throw new Exception("Phone number `" . htmlspecialchars($number) . "` isn't valid.", 400);
         }
         $this->recipient = $number;
+    }
+
+    /**
+     * @throws \FrantataCZ\smssluzba\Exception
+     */
+    public function addRecipient(string $number): void
+    {
+        $regex = "/^\\+?[1-9][0-9]{7,14}$/";
+
+        if(!preg_match($regex, $number))
+        {
+            throw new Exception("Phone number `" . htmlspecialchars($number) . "` isn't valid.", 400);
+        }
+
+        $this->recipients[] = $number;
+    }
+
+    /**
+     * @throws \FrantataCZ\smssluzba\Exception
+     */
+    public function addRecipients(array $numbers): void
+    {
+        foreach ($numbers as $number)
+        {
+            $this->addRecipient($number);
+        }
     }
 
     /**
@@ -66,11 +94,32 @@ class Sms
      */
     public function send()
     {
+        if($this->recipients === null)
+        {
+            $this->processSMS($this->message, $this->recipient);
+        } else {
+            if($this->recipient != null)
+            {
+                $this->processSMS($this->message, $this->recipient);
+            }
+            foreach ($this->recipients as $recipient)
+            {
+                $this->processSMS($this->message, $recipient);
+            }
+        }
+
+    }
+
+    /**
+     * @throws \FrantataCZ\smssluzba\Exception
+     */
+    private function processSMS(string $message, string $recipient)
+    {
         $data = [
             "login" => $this->login,
             "act" => self::ACTION,
-            "msisdn" => $this->recipient,
-            "msg" => $this->message,
+            "msisdn" => $recipient,
+            "msg" => $message,
             "auth" => $this->getAuth()
         ];
 
@@ -93,7 +142,6 @@ class Sms
         {
             throw new Exception($errorMessage ?? null, $resultCode);
         }
-
     }
 
     private function fixMessage(string $message): string
