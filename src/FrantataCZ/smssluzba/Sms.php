@@ -144,6 +144,26 @@ class Sms
         }
     }
 
+    public function getSMSArray(): array
+    {
+        $return = [];
+        $return["message"] = $this->message;
+        if($this->recipients === null)
+        {
+            $return["recipient"][] = $this->recipient;
+        } else {
+            if($this->recipient != null)
+            {
+                $return["recipient"][] = $this->recipient;
+            }
+            foreach ($this->recipients as $recipient)
+            {
+                $return["recipient"][] = $this->recipient;
+            }
+        }
+        return $return;
+    }
+
     private function fixMessage(string $message): string
     {
         // This code is from https://gist.github.com/evaisse/169594/1018cbfca3881f40e59560568d9b9d3dc12061d1
