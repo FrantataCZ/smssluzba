@@ -3,7 +3,7 @@
 
 #####  The username and password is login to sms-sluzba.cz
 Installation
-`composer require frantatacz/smssluzba v0.3`
+`composer require frantatacz/smssluzba v0.4`
 
 Using
 ```php
