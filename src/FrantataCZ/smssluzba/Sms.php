@@ -24,7 +24,7 @@ class Sms
 
     private function getAuth(): string
     {
-        return md5(Sms . phpmd5($this->password) .'send'.substr($this->message,0,31));
+        return md5(md5($this->password).$this->login.'send'.substr($this->message,0,31));
     }
 
     public function new()
@@ -34,7 +34,7 @@ class Sms
     }
 
     /**
-     * @throws \FrantataCZ\Exception
+     * @throws \FrantataCZ\smssluzba\Exception
      */
     public function setRecipient(string $number): void
     {
@@ -49,7 +49,7 @@ class Sms
     }
 
     /**
-     * @throws \FrantataCZ\Exception
+     * @throws \FrantataCZ\smssluzba\Exception
      */
     public function setMessage(string $message): void
     {
@@ -57,7 +57,7 @@ class Sms
 
         if(strlen($this->message) > self::MAX_SMS_LEN)
         {
-            throw new \FrantataCZ\Exception("Text message isn't valid.",400);
+            throw new \FrantataCZ\smssluzba\Exception("Text message isn't valid.",400);
         }
     }
 
