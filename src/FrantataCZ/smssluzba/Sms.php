@@ -158,7 +158,7 @@ class Sms
             }
             foreach ($this->recipients as $recipient)
             {
-                $return["recipient"][] = $this->recipient;
+                $return["recipient"][] = $recipient;
             }
         }
         return $return;
